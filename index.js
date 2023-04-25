@@ -122,10 +122,6 @@ function simple_matching(g1,g2){
 
     }
     
-        
-
-        
-
         result = {"similarity_score":Common/E1,"reverse_similarity_score":Common/E2};
         console.log(result);
         global_result_string+="<br/>"+JSON.stringify(result);
@@ -133,10 +129,94 @@ function simple_matching(g1,g2){
         return result     ;   
 }
 
+function binaryCosineSimilarity(matrix1, matrix2) {
+    // Flatten the matrices into 1D arrays
+    const arr1 = matrix1.flat();
+    const arr2 = matrix2.flat();
+  
+    // Compute the dot product of the two arrays
+    const dotProduct = arr1.reduce(
+      (acc, val, i) => acc + val * arr2[i],
+      0
+    );
+  
+    // Compute the magnitude of the two arrays
+    const mag1 = Math.sqrt(
+      arr1.reduce((acc, val) => acc + val ** 2, 0)
+    );
+    const mag2 = Math.sqrt(
+      arr2.reduce((acc, val) => acc + val ** 2, 0)
+    );
+  
+    // Compute the cosine similarity between the two arrays
+    const cosineSimilarity = dotProduct / (mag1 * mag2);
+  
+    return cosineSimilarity;
+  }
+
+  function getSecondNumbers(pairs, nums) {
+    return pairs
+      .filter(pair => nums.includes(pair[0]) && pair[1] !== undefined && !nums.includes(pair[1]))
+      .map(pair => pair[1]);
+  }
+
+  function getCommonVertices(edges1, edges2) {
+    const vertices1 = new Set(edges1.flat());
+    const vertices2 = new Set(edges2.flat());
+    const commonVertices = [...vertices1].filter(vertex => vertices2.has(vertex) && [...vertices1].filter(v => v === vertex).length > 1);
+    return commonVertices;
+  }
+
+
+  function sortSimilarityScores(list) {
+    const sortedList = list.sort((a, b) => {
+      // Sort by descending similarity_score
+      if (a.similarity_score !== b.similarity_score) {
+        return b.similarity_score - a.similarity_score;
+      }
+      // Sort by ascending distance from 1.0
+      const aDistance = Math.abs(a.reverse_similarity_score - 1);
+      const bDistance = Math.abs(b.reverse_similarity_score - 1);
+      return aDistance - bDistance;
+    });
+    return sortedList;
+  }
+
+  const inputList = [
+    {"similarity_score":0.34,"reverse_similarity_score":0.90},
+    {"similarity_score":0.56,"reverse_similarity_score":0.56},
+    {"similarity_score":0.78,"reverse_similarity_score":0.99},
+    {"similarity_score":0.56,"reverse_similarity_score":0.98},
+    {"similarity_score":0.90,"reverse_similarity_score":0.50}
+  ];
+  
+  const outputList = sortSimilarityScores(inputList);
+  
+  console.log(outputList);
 
 function main(){
+    const pairs = [[1,2],[5,6],[7,9],[8,9]];
+    const nums = [8,9,5];
     
+    const output = getSecondNumbers(pairs, nums);
     
+    console.log(output);
+
+    const outputList = sortSimilarityScores(inputList);
+    
+    console.log(outputList);
+
+    const edges1 = [[2,3]];
+    const edges2 = [[2,3],[4,5],[3,4]];
+    
+    const output2 = getCommonVertices(edges1, edges2);
+    
+    console.log(output2); // Output: [2, 3]
+
+    console.log(binaryCosineSimilarity(graph_1,graph_1));
+    console.log(binaryCosineSimilarity(graph_1,graph_2));
+    console.log(binaryCosineSimilarity(graph_2,graph_2));
+    console.log(binaryCosineSimilarity(graph_2,graph_1));
     simple_matching(graph_1,graph_2);
     root.innerHTML=global_result_string;
 
