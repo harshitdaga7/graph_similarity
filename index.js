@@ -1,4 +1,197 @@
 // sample input for graph
+
+let display_box=document.getElementById('display-box');
+let friends_box=document.getElementById('friends');
+let addFriends_box=document.getElementById('addFriends');
+let OurObj={
+  friends:[],
+  traversal:[[0, 1]],
+  email:''
+}
+
+
+
+
+
+
+let people = {
+  rohan: {
+    p_id: 1,
+    friends: [2, 4, 5],
+    traversal: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 6], [6, 7], [7, 8], [8, 9]],
+    email: "rohan@example.com"
+  },
+  jenny: {
+    p_id: 2,
+    friends: [1, 3, 5],
+    traversal: [[0, 1], [1, 2], [2, 4], [4, 5], [5, 9]],
+    email: "jenny@example.com"
+  },
+  tom: {
+    p_id: 3,
+    friends: [2, 4],
+    traversal: [[0, 1], [1, 4], [4, 3], [3, 2]],
+    email: "tom@example.com"
+  },
+  sarah: {
+    p_id: 4,
+    friends: [1, 3, 5],
+    traversal: [[0, 1], [1, 5], [5, 2], [2, 3], [3, 4]],
+    email: "sarah@example.com"
+  },
+  mike: {
+    p_id: 5,
+    friends: [2, 4],
+    traversal: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 1]],
+    email: "mike@example.com"
+  }
+};
+
+let webObjects = {
+  homepage: {
+    id: 1,
+    html: `
+      <h1>Welcome to my website!</h1>
+      <p>Click on the buttons below to explore:</p>
+      <button onClick='displayfunc(webObjects.about.html)'>About</button>
+      <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button>
+      <button onClick='displayfunc(webObjects.services.html)'>Services</button>
+      <button onClick='displayfunc(webObjects.testimonials.html)'>Testimonials</button>
+    `,
+  },
+  about: {
+    id: 2,
+    html: `
+      <h1>About Me</h1>
+      <p>Hi, I'm Jane! Here's a little bit about me:</p>
+      <ul>
+        <li>I'm a web developer</li>
+        <li>I love to read and travel</li>
+        <li>I have a cat named Mittens</li>
+      </ul>
+      <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button>
+      <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button>
+      <button onClick='displayfunc(webObjects.services.html)'>Services</button>
+      <button onClick='displayfunc(webObjects.testimonials.html)'>Testimonials</button>
+    `,
+  },
+  portfolio: {
+    id: 3,
+    html: `
+      <h1>Portfolio</h1>
+      <p>Check out some of my work:</p>
+      <ul>
+        <li><a href="#">Project 1</a></li>
+        <li><a href="#">Project 2</a></li>
+        <li><a href="#">Project 3</a></li>
+      </ul>
+      <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button>
+      <button onClick='displayfunc(webObjects.about.html)'>About</button>
+      <button onClick='displayfunc(webObjects.services.html)'>Services</button>
+      <button onClick='displayfunc(webObjects.testimonials.html)'>Testimonials</button>
+    `,
+  },
+  services: {
+    id: 4,
+    html: `
+      <h1>Services</h1>
+      <p>Here are the services I offer:</p>
+      <ul>
+        <li>Web development</li>
+        <li>Graphic design</li>
+        <li>Social media management</li>
+      </ul>
+      <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button>
+      <button onClick='displayfunc(webObjects.about.html)'>About</button>
+      <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button>
+      <button onClick='displayfunc(webObjects.testimonials.html)'>Testimonials</button>
+    `,
+  },
+  testimonials: {
+    id: 5,
+    html: `
+      <h1>Testimonials</h1>
+      <p>Here's what my clients have to say:</p>
+      <ul>
+        <li>"Jane was a pleasure to work with! She delivered a great website in a timely manner." - John Smith</li>
+        <li>"I would definitely recommend Jane for any web design or development projects." - Mary Jones</li>
+        <li>"I'm so happy with the results of my social media campaign. Thanks, Jane!" - Bob Johnson</li>
+      </ul>
+      <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button>
+      <button onClick='displayfunc(webObjects.about.html)'>
+      About</button>
+      <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button>
+      <button onClick='displayfunc(webObjects.services.html)'>Services</button>
+    `,
+  },
+  contact: {
+  id: 6,
+  html: `<h1>Contact Me</h1>
+   <p>Want to get in touch? Fill out the form below:</p>
+    <form> <label for="name">Name:</label> <input type="text" id="name" name="name"><br><br> <label for="email">Email:</label> <input type="email" id="email" name="email"><br><br> 
+    <label for="message">Message:</label> 
+    <textarea id="message" name="message" rows="5"></textarea>
+    <br><br> 
+    <button type="submit">Send</button> </form> <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button>
+    <button onClick='displayfunc(webObjects.about.html)'>About</button> <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button> 
+    <button onClick='displayfunc(webObjects.services.html)'>Services</button> ,
+  `},
+  blog: {
+  id: 7,
+  html: `<h1>Blog</h1>
+   <p>Read my latest posts:</p>
+    <ul> <li><a href="#">Post 1</a></li> <li><a href="#">Post 2</a></li> <li><a href="#">Post 3</a></li> </ul> 
+    <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button> 
+    <button onClick='displayfunc(webObjects.about.html)'>About</button> 
+    <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button> 
+    <button onClick='displayfunc(webObjects.services.html)'>Services</button> `,
+  },
+  faq: {
+  id: 8,
+  html: `<h1>FAQ</h1> <p>Have a question? Check out our frequently asked questions:</p>
+   <ul> <li>Q: How long does it take to complete a website?<br>A: It depends on the complexity of the project, but most sites take 4-6 weeks to complete.</li> 
+   <li>Q: What is your pricing?<br>A: Our pricing varies depending on the project. Contact us for a custom quote.</li> 
+   <li>Q: Do you offer hosting?<br>A: We do not offer hosting, but we can recommend a reliable hosting provider.</li> </ul> 
+   <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button> <button onClick='displayfunc(webObjects.about.html)'>About</button> 
+   <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button> <button onClick='displayfunc(webObjects.services.html)'>Services</button> ,
+  `},
+  team: {
+  id: 9,
+  html: `<h1>Our Team</h1>
+  <p>Meet our talented team:</p>
+  <ul>
+  <li>John Smith - CEO</li>
+  <li>Jane Doe - Web Developer</li>
+  <li>Bob Johnson - Graphic Designer</li>
+  </ul>
+  <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button>
+  <button onClick='displayfunc(webObjects.about.html)'>About</button>
+  <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button>
+  <button onClick='displayfunc(webObjects.services.html)'>Services</button>
+  , }, testimonials: { id: 10, html: <h1>Testimonials</h1>
+  <p>See what our satisfied clients have to say:</p>
+  <ul>
+  <li>"Working with this team was a great experience. They really listened to our needs and delivered a high-quality website."</li>
+  <li>"We were impressed with their attention to detail and fast turnaround time. Highly recommend!"</li>
+  <li>"The team was very professional and easy to work with. We're very happy with the results."</li>
+  </ul>
+  <button onClick='displayfunc(webObjects.homepage.html)'>Homepage</button>
+  <button onClick='displayfunc(webObjects.about.html)'>About</button>
+  <button onClick='displayfunc(webObjects.portfolio.html)'>Portfolio</button>
+  <button onClick='displayfunc(webObjects.services.html)'>Services</button>
+  `,
+  }
+  };
+    
+
+function displayfunc(html){
+  display_box.innerHTML=html;
+}
+
+let directedConnections = [];
+
+
+
 let graph_1 = [[0,0,1,0,1],[0,1,0,0,1],[0,1,0,0,1],[0,1,0,0,0],[0,1,0,0,0]];
 let graph_2 = [[0,0,1,0,0],[0,1,0,0,0],[0,0,0,0,0],[0,1,0,1,0],[0,1,0,0,0]];
 // let root = document.getElementById("")
@@ -27,6 +220,7 @@ function generateMatrix(n) {
         newMatrix[i][j] = matrix[i][j];
       }
     }
+
   
     return newMatrix;
   }
@@ -62,7 +256,7 @@ function adjMat_2_directedEdges(Graph){
 
 function dircetedEdges_2_adjMat(Graph){
     console.log(Graph);
-    
+    global_result_string+="<br/>"+JSON.stringify(Graph);
     let size= 0;
     for (let i=0; i<Graph.length; i++){
         if(Graph[i][0]>size){
@@ -72,9 +266,9 @@ function dircetedEdges_2_adjMat(Graph){
             size=Graph[i][1];
         }
     }
-    console.log(size);
+  
     let AdjMat=generateMatrix(size+1);
-    console.log(AdjMat);
+
 
 
     for(let i=0; i<Graph.length; i++){
@@ -122,7 +316,7 @@ function simple_matching(g1,g2){
 
     }
     
-        result = {"similarity_score":Common/E1,"reverse_similarity_score":Common/E2};
+        result = {"similarity_score":Common/E1,"reverse_similarity_score":Common/E2, "jaccards_similarity" : Common/(E1+E2-Common)};
         console.log(result);
         global_result_string+="<br/>"+JSON.stringify(result);
         
@@ -194,10 +388,73 @@ function binaryCosineSimilarity(matrix1, matrix2) {
   
   console.log(outputList);
 
+    // // iterate over each webpage in webObjects
+    // for (const page in webObjects) {
+    //   // find all the buttons in the webpage
+    //   const buttons = webObjects[page].html.match(/<button onClick='displayfunc\((.*?)\)/g);
+    
+    //   // if the webpage has buttons, extract the ids from their onClick attributes
+    //   if (buttons) {
+    //     for (const button of buttons) {
+    //       const id = button.match(/webObjects\.(.*?)\.html/)[1];
+    //       directedConnections.push([webObjects[page].id, webObjects[id].id]);
+    //     }
+    //   }
+    // }
+    
+    // console.log(directedConnections); 
+    // global_result_string+="<br/>"+JSON.stringify(directedConnections)
+
+
+    function addFriendsDisp(){
+      let listofSuggFriends=[];
+      let htmlFriends=``;
+      for(const person in people){
+        let ourMATrix=  dircetedEdges_2_adjMat(OurObj.traversal);
+        let personMatrix =dircetedEdges_2_adjMat(people[person].traversal);
+         if(personMatrix.length>ourMATrix.length){
+          ourMATrix=increaseMatrixSize(ourMATrix,personMatrix.length-ourMATrix.length)
+         }
+         else if(personMatrix.length<ourMATrix.length){
+          personMatrix=increaseMatrixSize(personMatrix,ourMATrix.length-personMatrix.length)
+         }
+
+
+
+
+
+         listofSuggFriends.push([people[person].p_id, binaryCosineSimilarity(ourMATrix,personMatrix)]);
+
+      }
+      listofSuggFriends=listofSuggFriends.sort((a, b) => b[1] - a[1])
+
+      for(let i=0; i<3; i++){
+        htmlFriends+=`<button onClick='addFriends(${listofSuggFriends[i][0]})'>${listofSuggFriends[i][0]}</button>`
+      }
+    
+      addFriends_box.innerHTML=htmlFriends;
+    }
+
+    function addFriends(num){
+      
+      OurObj.friends.push(num)
+      friends_box.innerHTML=JSON.stringify(OurObj.friends)
+    }
+
+
+    
 function main(){
+
+  addFriendsDisp();
+
+  displayfunc(webObjects.homepage.html)
     const pairs = [[1,2],[5,6],[7,9],[8,9]];
     const nums = [8,9,5];
-    
+    friends_box.innerHTML=JSON.stringify(OurObj.friends)
+
+
+
+
     const output = getSecondNumbers(pairs, nums);
     
     console.log(output);
