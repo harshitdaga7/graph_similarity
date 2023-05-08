@@ -19,35 +19,35 @@ let people = {
     name:'rohan',
     p_id: 1,
     friends: [2, 4, 5],
-    traversal: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 6], [6, 7], [7, 8], [8, 9]],
+    traversal: [[0,1],[1,1],[1,2],[2,9],[9,2],[2,5],[5,2],[9,1],[4,6],[2,4]],
     email: "rohan@example.com"
   },
   2: {
     name:'jenny',
     p_id: 2,
     friends: [1, 3, 5],
-    traversal: [[0, 1], [1, 2], [2, 4], [4, 5], [5, 9]],
+    traversal: [[0,1],[1,1],[1,2],[2,3],[3,1],[1,3],[3,2],[2,4],[4,5],[5,2],[3,6]],
     email: "jenny@example.com"
   },
   3: {
     name:'tom',
     p_id: 3,
     friends: [2, 4],
-    traversal: [[0, 1], [1, 4], [4, 3], [3, 2]],
+    traversal: [[0,1],[1,1],[1,8],[8,4],[4,8],[8,9],[9,4],[4,5],[5,6],[6,7],[7,8]],
     email: "tom@example.com"
   },
   4: {
     name:'sarah',
     p_id: 4,
     friends: [1, 3, 5],
-    traversal: [[0, 1], [1, 5], [5, 2], [2, 3], [3, 4]],
+    traversal: [[0,1],[1,1], [1, 5], [5, 2], [2, 3], [3, 4],[4,5],[1,6]],
     email: "sarah@example.com"
   },
   5: {
     name:'mike',
     p_id: 5,
     friends: [2, 4],
-    traversal: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 1]],
+    traversal: [[0,1],[1,1], [1, 2], [2, 3], [3, 4], [4, 1],[1,6]],
     email: "mike@example.com"
   }
 };
@@ -78,6 +78,8 @@ let webObjects = {
       <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button>
       <button onClick='displayfunc(webObjects.services )'>Services</button>
       <button onClick='displayfunc(webObjects.testimonials )'>Testimonials</button>
+      <button onClick='displayfunc(webObjects.faq )'>FAQ</button> 
+      <button onClick='displayfunc(webObjects.contact )'>Contact</button>
     `,
   },
   about: {
@@ -93,8 +95,10 @@ let webObjects = {
       </ul>
       <button onClick='displayfunc(webObjects.homepage )'>Homepage</button>
       <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button>
+      <button onClick='displayfunc(webObjects.contact )'>Contact</button>
       <button onClick='displayfunc(webObjects.services )'>Services</button>
       <button onClick='displayfunc(webObjects.testimonials )'>Testimonials</button>
+      <button onClick='displayfunc(webObjects.team )'>Team</button> 
     `,
   },
   portfolio: {
@@ -112,6 +116,8 @@ let webObjects = {
       <button onClick='displayfunc(webObjects.about )'>About</button>
       <button onClick='displayfunc(webObjects.services )'>Services</button>
       <button onClick='displayfunc(webObjects.testimonials )'>Testimonials</button>
+      <button onClick='displayfunc(webObjects.team )'>Team</button> 
+      <button onClick='displayfunc(webObjects.contact )'>Contact</button>
     `,
   },
   services: {
@@ -128,7 +134,9 @@ let webObjects = {
       <button onClick='displayfunc(webObjects.homepage )'>Homepage</button>
       <button onClick='displayfunc(webObjects.about )'>About</button>
       <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button>
+      <button onClick='displayfunc(webObjects.contact )'>Contact</button>
       <button onClick='displayfunc(webObjects.testimonials )'>Testimonials</button>
+      <button onClick='displayfunc(webObjects.faq )'>FAQ</button> 
     `,
   },
   testimonials: {
@@ -161,7 +169,7 @@ let webObjects = {
     <br><br> 
     <button type="submit">Send</button> </form> <button onClick='displayfunc(webObjects.homepage )'>Homepage</button>
     <button onClick='displayfunc(webObjects.about )'>About</button> <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button> 
-    <button onClick='displayfunc(webObjects.services )'>Services</button> ,
+    <button onClick='displayfunc(webObjects.services )'>Services</button>
     <button onClick='displayfunc(webObjects.blog )'>Blog</button>
   `},
   blog: {
@@ -201,6 +209,7 @@ let webObjects = {
   </ul>
   <button onClick='displayfunc(webObjects.homepage )'>Homepage</button>
   <button onClick='displayfunc(webObjects.about )'>About</button>
+  <button onClick='displayfunc(webObjects.contact )'>Contact</button>
   <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button>
   <button onClick='displayfunc(webObjects.services )'>Services</button> 
   `,
