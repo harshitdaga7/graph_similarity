@@ -52,7 +52,8 @@ let people = {
   }
 };
 
-objectmap={
+let objectmap={
+ 0: "origin",
  1: 'homepage',
  2: 'about',
  3: 'portfolio',
@@ -146,6 +147,7 @@ let webObjects = {
       About</button>
       <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button>
       <button onClick='displayfunc(webObjects.services )'>Services</button>
+      <button onClick='displayfunc(webObjects.contact )'>Contact</button>
     `,
   },
   contact: {
@@ -160,6 +162,7 @@ let webObjects = {
     <button type="submit">Send</button> </form> <button onClick='displayfunc(webObjects.homepage )'>Homepage</button>
     <button onClick='displayfunc(webObjects.about )'>About</button> <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button> 
     <button onClick='displayfunc(webObjects.services )'>Services</button> ,
+    <button onClick='displayfunc(webObjects.blog )'>Blog</button>
   `},
   blog: {
     name:'blog',
@@ -170,7 +173,9 @@ let webObjects = {
     <button onClick='displayfunc(webObjects.homepage )'>Homepage</button> 
     <button onClick='displayfunc(webObjects.about )'>About</button> 
     <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button> 
-    <button onClick='displayfunc(webObjects.services )'>Services</button> `,
+    <button onClick='displayfunc(webObjects.services )'>Services</button> 
+    <button onClick='displayfunc(webObjects.faq )'>FAQ</button> 
+    `,
   },
   faq: {
     name:'faq',
@@ -180,7 +185,9 @@ let webObjects = {
    <li>Q: What is your pricing?<br>A: Our pricing varies depending on the project. Contact us for a custom quote.</li> 
    <li>Q: Do you offer hosting?<br>A: We do not offer hosting, but we can recommend a reliable hosting provider.</li> </ul> 
    <button onClick='displayfunc(webObjects.homepage )'>Homepage</button> <button onClick='displayfunc(webObjects.about )'>About</button> 
-   <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button> <button onClick='displayfunc(webObjects.services )'>Services</button> ,
+   <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button> <button onClick='displayfunc(webObjects.services )'>Services</button> 
+   <button onClick='displayfunc(webObjects.team )'>Team</button> 
+   ,
   `},
   team: {
     name:'team',
@@ -195,18 +202,7 @@ let webObjects = {
   <button onClick='displayfunc(webObjects.homepage )'>Homepage</button>
   <button onClick='displayfunc(webObjects.about )'>About</button>
   <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button>
-  <button onClick='displayfunc(webObjects.services )'>Services</button>
-  , }, testimonials: { id: 10, html: <h1>Testimonials</h1>
-  <p>See what our satisfied clients have to say:</p>
-  <ul>
-  <li>"Working with this team was a great experience. They really listened to our needs and delivered a high-quality website."</li>
-  <li>"We were impressed with their attention to detail and fast turnaround time. Highly recommend!"</li>
-  <li>"The team was very professional and easy to work with. We're very happy with the results."</li>
-  </ul>
-  <button onClick='displayfunc(webObjects.homepage )'>Homepage</button>
-  <button onClick='displayfunc(webObjects.about )'>About</button>
-  <button onClick='displayfunc(webObjects.portfolio )'>Portfolio</button>
-  <button onClick='displayfunc(webObjects.services )'>Services</button>
+  <button onClick='displayfunc(webObjects.services )'>Services</button> 
   `,
   }
   };
@@ -226,6 +222,10 @@ function displayfunc(Object){
   display_box.innerHTML=Object.html;
   traversed_box.innerHTML=JSON.stringify(OurObj.traversal);
   current_pos=Object.id;
+
+  document.getElementById("root-graph").innerHTML = "";
+
+  drawGraph();
   addFriendsDisp();
   DispNextOptions();
 }
@@ -648,6 +648,11 @@ function main(){
   DispNextOptions();
   displayfunc(webObjects.homepage);
 
+  for(let key in people){
+    console.log(people[key]);
+    drawFriendGraph(people[key]);
+  }
+
 }
 
 // let OurObj={
@@ -656,47 +661,143 @@ function main(){
 //   email:''
 // }
 
+// let objectmap={
+//   1: 'homepage',
+//   2: 'about',
+//   3: 'portfolio',
+//   4: 'services',
+//   5: 'testimonials',
+//   6: 'contact',
+//   7: 'blog',
+//   8: 'faq',
+//   9: 'team'
+//  }
+
+function getUniqueVertices(edges) {
+  const vertices = new Set();
+  for (const [v1, v2] of edges) {
+    vertices.add(v1);
+    vertices.add(v2);
+  }
+  return Array.from(vertices);
+}
+
 function drawGraph(){
+
+
 
   let edges_list = [];
   let nodes_list = [];
 
+  let nodes_list_temp = getUniqueVertices(OurObj.traversal);
+
+  for(let i = 0;i<nodes_list_temp.length;i++){
+
+    nodes_list.push({"id":objectmap[nodes_list_temp[i]]});
+  }
+
+
+  for(let i = 0;i<OurObj.traversal.length;i++){
+    
+
+
+    let from = objectmap[OurObj.traversal[i][0]];
+    let to = objectmap[OurObj.traversal[i][1]];
   
+
+    console.log(from,to);
+    edges_list.push({"from":from,"to":to});
+  }
+
+  console.log(edges_list,nodes_list);
+
+  let data = {
+
+    nodes : nodes_list,
+    edges : edges_list
+  }
+
+  var chart = anychart.graph(data);
+
+  // enable labels of nodes
+chart.nodes().labels().enabled(true);
+
+// configure labels of nodes
+chart.nodes().labels().format("{%id}");
+chart.nodes().labels().fontSize(12);
+chart.nodes().labels().fontWeight(600);
+
+// set the container id
+    chart.container("root-graph");
+
+    // initiate drawing the chart
+    chart.draw();
+
+
 
 
 }
 
-// create data
-var data = {
-  nodes: [
-    {id: "Richard"},
-    {id: "Larry"},
-    {id: "Marta"},
-    {id: "Jane"},
-    {id: "Norma"},
-    {id: "Frank"},
-    {id: "Brett"}
-  ],
-  edges: [
-    {from: "Richard", to: "Larry"},
-    {from: "Richard", to: "Marta"},
-    {from: "Larry",   to: "Marta"},
-    {from: "Marta",   to: "Jane"},
-    {from: "Jane",    to: "Norma"},
-    {from: "Jane",    to: "Frank"},
-    {from: "Jane",    to: "Brett"},
-    {from: "Brett",   to: "Frank"}
-  ]
-};
+// 1: {
+//   name:'rohan',
+//   p_id: 1,
+//   friends: [2, 4, 5],
+//   traversal: [[0, 1], [1, 2], [2, 3], [3, 4], [4, 6], [6, 7], [7, 8], [8, 9]],
+//   email: "rohan@example.com"
+// },
+function drawFriendGraph(graphData){
 
-// create a chart and set the data
-var chart = anychart.graph(data);
+  let nodes_list = [];
+  let edges_list = [];
 
-// set the container id
-chart.container("root");
+  let nodes_list_temp = getUniqueVertices(graphData.traversal);
 
-// initiate drawing the chart
-chart.draw();
+  for(let i = 0;i<nodes_list_temp.length;i++){
+
+    nodes_list.push({"id":objectmap[nodes_list_temp[i]]});
+  }
+
+  for(let i = 0;i<graphData.traversal.length;i++){
+    
+    let from = objectmap[graphData.traversal[i][0]];
+    let to = objectmap[graphData.traversal[i][1]];
+  
+
+    console.log(from,to);
+    edges_list.push({"from":from,"to":to});
+  }
+
+  let data = {
+
+    nodes : nodes_list,
+    edges : edges_list
+  }
+
+  document.getElementById(graphData.name).innerHTML = `<h3>${graphData.name}</h3>`;
+
+  var chart = anychart.graph(data);
+
+  // enable labels of nodes
+  chart.nodes().labels().enabled(true);
+
+  // configure labels of nodes
+  chart.nodes().labels().format("{%id}");
+  chart.nodes().labels().fontSize(12);
+  chart.nodes().labels().fontWeight(600);
+
+  // set the container id
+  chart.container(graphData.name);
+
+  // initiate drawing the chart
+  chart.draw();
+
+
+
+
+
+}
+
+
 
 
 
