@@ -18,38 +18,60 @@
     <main>
       <div class="container-fluid">
         <div class="row">
+          <nav class="navbar bg-dark sticky-top text-white" data-bs-theme="dark">
+            <div class="container-fluid">
+              <a class="navbar-brand  text-white" href="./index.html">Suggestions using Graph Similarity</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                  <a class="nav-link  text-white" href="./aboutus.html">About Us</a>
+                  <a class="nav-link  text-white" href="https://medium.com/@rohan10dalvi/cosine-similarity-in-graph-similarity-3c260e7efd3f">Cosine Similarity</a>
+                  <a class="nav-link  text-white" href="https://medium.com/@rohan10dalvi/jaccard-similarity-in-graph-theory-a049d6ba8a9">Jaccard Similarity</a>
+                </div>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="row">
           <div class="col">
             <div class="row">
-             <h3>Traversed Graph</h3> 
-              <div class="col-12" id="traversed-graph">
+             <h1 class="fw-light">Traversed Graph</h1> <hr/>
+              <div class="col-12 fw-light" id="traversed-graph">
                 Traversed Graph
                 
               </div>
-              <hr />
-              <div class="col-12" id="root-graph" style="height:400px">
+              
+              <div class="col-12 border border-1" id="root-graph" style="height:300px">
 
               </div>
             </div>
             <div class="row">
-              <h3>NEXT OPTIONS</h3>
-              <div class="col" id="Next-Options">
+              <h1 class="fw-light">Next Options</h1>
+              <hr/>
+              <div class="col fw-light" id="Next-Options">
                 NEXT OPTIONS
               </div>
             </div>
           </div>
-          <div class="col border border-5 border-dark"  id="display-box">
+          <div class="col border border-5 border-dark fw-light"  id="display-box">
             WEBSITE
           </div>
           <div class="col">
             <div class="row ">
-              <h5>FRIENDS</h5>
-              <div class="col " id="friends">
-                FRIENDS
+              <h1 class="fw-light">Friends</h1>
+              <hr/>
+              <div class="col fw-light " id="friends">
+                Add friends from the list below.
               </div>
             </div>
+            
             <div class="row">
-              <H5>ADD FRIENDS</H5>
-              <div class="col" id="addFriends">
+              <hr/>
+              <H1 class="fw-light">Add Friends</H1>
+              <hr/>
+              <div class="col fw-light" id="addFriends">
                 ADD FRIENDS
               </div>
             </div>
@@ -60,10 +82,17 @@
 
 
 
+<br>
+<hr/>
+<div class="d-flex justify-content-center">
+  <h1 class="  fw-light">Welcome to My Website: </h1> 
+   <hr/>
 
-        <h1>Welcome to My Website</h1>  
-        <button onclick="main()"> Rerun</button>
-        <div id="root">*Empty*</div>
+        <button class="btn btn-light btn-outline-dark" onclick="main()">Run/ Rerun</button>
+        <div id="root"></div>
+</div>
+      
+        
         <div id="friends-vis">
           <div class="row g-5">
             <div class="col-4 border border-1" id="rohan" style="height:400px"></div>
