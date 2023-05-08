@@ -12,10 +12,8 @@ let OurObj={
 }
 
 
-
-
-
 let people_list
+
 let people = {
   1: {
     name:'rohan',
@@ -54,6 +52,17 @@ let people = {
   }
 };
 
+objectmap={
+ 1: 'homepage',
+ 2: 'about',
+ 3: 'portfolio',
+ 4: 'services',
+ 5: 'testimonials',
+ 6: 'contact',
+ 7: 'blog',
+ 8: 'faq',
+ 9: 'team'
+}
 
 
 
